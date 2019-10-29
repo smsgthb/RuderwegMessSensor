@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -50,7 +51,8 @@
 // V0.32 : SMS: assuming MM8452 if I2C address of MMA8451 is used but sensor ID is not as expected
 // V0.33 : SMS: typo in MM8452 detection
 // V0.34 : JR: AP-Name now configurable
-#define WM_VERSION "V0.34"
+// V0.34p: SMS: Customization for use with PlatformIO
+#define WM_VERSION "V0.34p"
 
 /**
  * \file RuderwegMessSensor.ino
@@ -178,6 +180,46 @@ static MPU6050 mpu;
 #include <U8g2lib.h>         // OLED library  https://github.com/olikraus/u8g2
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ D1, /* data=*/ D2); //OLED am Wemos D1 mini Pin 1 und 2
 #endif
+
+void readMotionSensor();
+void prepareMotionData();
+double getAngle();
+double getAmplitude(double aAngle);
+float getRoundedAngle();
+float getRoundedAmplitude();
+float getRudderAmplitude();
+float roundPrecision(double aVal, precision_t aPrecision);
+void taraAngle();
+void flightPhaseMeasure(boolean aStart);
+void setupWebServer();
+void HTMLrootPage();
+void HTMLadminPage();
+void setDataReq();
+void getDataReq();
+void handleWebRequests();
+void checkHTMLArguments();
+double irr_low_pass_filter(double aSmoothedValue, double aCurrentValue, double aSmoothingFactor);
+float roundToDot5(double aValue);
+void printMPU5060Offsets();
+boolean isI2C_MMA8451Addr();
+boolean isI2C_MPU6050Addr();
+void initMMA8451();
+void initMPU5060();
+void triggerRestart();
+void restartESP();
+void triggerCalibrateMPU6050();
+boolean isSensorCalibrated();
+void calibrateMPU6050();
+void doAsync();
+void detectSensor();
+void setupWiFi();
+void showConfig(const char *aContext);
+void setDefaultConfig();
+void saveConfig();
+void loadConfig();
+void checkHWReset(uint8_t aPin);
+
+
 
 static configData_t ourConfig;
 

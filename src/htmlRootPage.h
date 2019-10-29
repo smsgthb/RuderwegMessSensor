@@ -116,9 +116,9 @@ const char MAIN_page[] PROGMEM = R"=====(
   ###<SCRIPT>###
   <script>
   setInterval(function() {
-    // Call a function repetatively with 2 Second interval
+    // Call a function repetatively with 1 Second interval
     getData("id_angleValue", "id_amplitudeValue", "cpx_flightphase" );
-  }, 1000); //2000mSeconds update rate
+  }, 1000); //1000mSeconds update rate
   getData("id_version", "id_rudderDepth", "id_sensortype", "id_amplitudeCalcMethod");
   </script>
   </body>
